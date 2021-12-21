@@ -9,11 +9,13 @@ exports.signUp = (req, res) => {
     
     user.save((err, user)=>{
         if(err) {
+            console.log({err});
             return res.status(400).json({
                 err: errorHandler(err)
             })
         }
         user.password = undefined;
+        console.log({user});
         res.json(user)
     });
       

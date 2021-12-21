@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const cors = require('cors');
 const config = require('./config/config');
 const authRoute = require('./route/auth');
 const userRoute = require('./route/user');
@@ -34,6 +35,7 @@ app.use(session({
         maxAge: 2678400000
     }
 }));
+app.use(cors());
 app.use(expressValidator());
 app.use('/api', authRoute);
 app.use('/api', userRoute);

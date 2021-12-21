@@ -10,6 +10,6 @@ router.get('/test/:user_id', requireSignIn, isAuth, (req, res)=>{
     })
 } )
 
-router.put('/user/:user_id', requireSignin, isAuth, update);
-router.get('/orders/user/:user_id', requireSignin, isAuth, purchaseHistory);
+router.put('/user/:user_id', requireSignIn, isAuth, update);
+router.get('/orders/user/:user_id', requireSignIn, isAuth, purchaseHistory);
 module.exports = router;
