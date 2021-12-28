@@ -21,7 +21,7 @@ router.put(
     isAdmin,
     update
 );
-router.get('/product', list);
+router.get('/products', list);
 router.get('/product/related/:product_id', listRelated);
 router.get("/products/categories", listCategories);
 router.get("/product/image/:product_id", image);
