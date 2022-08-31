@@ -3,7 +3,7 @@
 const Product = require('../models/product');
 const _ = require('lodash');
 const formidable = require('formidable');
-const error = require('../helper/errorHandler');
+const { errorHandler } = require('../helper/errorHandler');
 const fs = require('fs');
 exports.create = (req, res) =>{
     const form = new formidable.IncomingForm();
@@ -11,7 +11,7 @@ exports.create = (req, res) =>{
     form.parse(req, (err, fields, files)=>{
         if(err){
             res.status(400).json({
-                error: error.errorHandler(err)
+                error: errorHandler(err)
             })
         }
 
@@ -37,7 +37,7 @@ exports.create = (req, res) =>{
         product.save((err, data)=>{
             if(err){
                 res.status(400).json({
-                    error: error.errorHandler(err)
+                    error: errorHandler(err)
                 })
             }
             res.status(201).json({
@@ -154,6 +154,29 @@ exports.listCategories = (req, res) => {
         }
         res.json(categories);
     });
+};
+
+exports.listSearch = (req, res) => {
+    const query = {};
+    if(req.query.search){
+        query.name = {$regex: req.query.search, $options: 'i'} 
+
+        if(req.query.category && req.query.category !== 'All'){
+            query.category = req.query.category
+        }
+
+        Product.find(query, (err, products)=> {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                })
+            }
+            console.log({products})
+            res.status(200).json(products)
+        }).select("-image")
+    }
+
+    
 };
 
 exports.listBySearch = (req, res) => {
